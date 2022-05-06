@@ -1,4 +1,4 @@
-#include <stdio.h>
+﻿#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -292,12 +292,180 @@ void nb3cut_output_figure_bmp(FILE *fp, uint8_t *buf, int size)
     fwrite( buf+i, sizeof(uint8_t), 1, fp );
 }
 
+static char *nb3name[] = {
+  "上杉謙信",
+  "里見義尭",
+  "武田信玄",
+  "北条氏康",
+  "今川義元",
+  "畠山義綱",
+  "神保長職",
+  "姉小路良頼",
+  "本願寺光佐",
+  "朝倉義景",
+  "斎藤義竜",
+  "織田信長",
+  "徳川家康",
+  "浅井長政",
+  "六角義賢",
+  "北畠具教",
+  "足利義輝",
+  "鈴木佐大夫",
+  "三好長慶",
+  "波多野秀治",
+  "一色義道",
+  "山名豊国",
+  "赤松義祐",
+  "尼子晴久",
+  "宇喜多直家",
+  "毛利元就",
+  "河野通宣",
+  "長宗我部元親",
+  "上杉景勝",
+  "武田勝頼",
+  "毛利輝元",
+  "河野通直",
+  "北条氏政",
+  "羽柴秀吉",
+  "明智光秀",
+  "柴田勝家",
+  "山本勘助",
+  "服部半蔵",
+  "松永久秀",
+  "足利義昭",
+  "",
+  "今川氏真",
+  "",
+  "姉小路頼綱",
+  "斎藤龍興",
+  "織田信忠",
+  "滝川一益",
+  "丹羽長秀",
+  "前田利家",
+  "石川数正",
+  "本多忠勝",
+  "細川藤孝",
+  "鈴木重秀",
+  "小早川隆景",
+  "吉川元春",
+  "毛利隆元",
+  "清水宗春",
+  "山中鹿介",
+  "",
+  "筒井順慶",
+  "",
+  "真田昌幸",
+  "木曾義昌",
+  "小山田信繁",
+  "",
+  "佐久間盛政",
+  "",
+  "",
+  "",
+  "風魔小太郎",
+  "織田信雄",
+  "黒田官兵衛",
+  "竹中半兵衛",
+  "宇佐美定満",
+  "北条氏照",
+  "佐久間信盛",
+  "山県昌景",
+  "高坂昌信",
+  "武田信繁",
+  "内藤信豊",
+  "馬場信房",
+  "森蘭丸",
+  "",
+  "真田幸村",
+  "真田幸隆",
+  "武田義信",
+  "里見義頼",
+  "北条氏規",
+  "北条氏邦",
+  "",
+  "武田信廉",
+  "穴山信君",
+  "秋山信友",
+  "酒井忠次",
+  "稲葉一鉄",
+  "織田勝長",
+  "織田信包",
+  "織田信孝",
+  "",
+  "",
+  "加藤清正",
+  "福島正則",
+  "斎藤朝信",
+  "上杉景信",
+  "本庄繁長",
+  "上条政繁",
+  "蒲生氏郷",
+  "藤堂高虎",
+  "香宗我部親泰",
+  "",
+  "北条綱成",
+  "香川親和",
+  "羽柴秀長",
+  "",
+  "",
+  "三好義賢",
+  "榊原康政",
+  "",
+  "鳥居元忠",
+  "直江景綱",
+  "柿崎景家",
+  "吉川広家",
+  "",
+  "",
+  "氏家卜全",
+  "安藤守就",
+  "本願寺光寿",
+  "",
+  "細川忠興",
+  "十河一存",
+  "村上義清",
+  "土岐頼次",
+  "尼子義久",
+  "北条高広",
+  "里見義弘",
+  "朝比奈泰朝",
+  "畠山義慶",
+  "神保長住",
+  "姉小路信綱",
+  "朝倉景健",
+  "朝倉景鏡",
+  "六角義治",
+  "木造具政",
+  "和田惟政",
+  "三好長逸",
+  "三好政康",
+  "十河存保",
+  "岩成友通",
+  "一色義定",
+  "山名祐豊",
+  "赤松則房",
+  "宇喜多忠家",
+  "蜂須賀正勝",
+  "口羽通良",
+  "池田恒興",
+  "金森長近",
+  "",
+};
+
+#define FINNAME0 "palette.nb3"
+#define FINNAME1 "Kao.nb3"
+#define FINNAME2 "Kao2.nb3"
+#define FINNAME3 "Kao3.nb3"
+
 int nb3cut_output_track_figure(uint8_t *buf, int count, int size, const char filename[])
 {
   FILE *fout;
   char trackname[BUFSIZ];
 
-  sprintf( trackname, "%s.%03d.bmp", filename, count );
+  if( strcmp( filename, FINNAME1 ) == 0 )
+    sprintf( trackname, "%s.%03d%s.bmp", filename, count, nb3name[count] );
+  else
+    sprintf( trackname, "%s.%03d.bmp", filename, count );
   if( !( fout = fopen( trackname, "wb" ) ) ){
     fprintf( stderr, "cannot create file %s.\n", trackname );
     return -1;
@@ -306,11 +474,6 @@ int nb3cut_output_track_figure(uint8_t *buf, int count, int size, const char fil
   fclose( fout );
   return 0;
 }
-
-#define FINNAME0 "palette.nb3"
-#define FINNAME1 "Kao.nb3"
-#define FINNAME2 "Kao2.nb3"
-#define FINNAME3 "Kao3.nb3"
 
 int main(int argc, char *argv[])
 {
