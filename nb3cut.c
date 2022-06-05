@@ -259,7 +259,7 @@ void nb3cut_output_figure_bmp(FILE *fp, uint8_t *buf, int size)
 {
   uint32_t bpl, rest;
   size_t imgsize, offset;
-  register int i;
+  register int i, j;
 
   /* header charactor */
   fputc( 'B', fp );
@@ -288,8 +288,9 @@ void nb3cut_output_figure_bmp(FILE *fp, uint8_t *buf, int size)
   for( i=0; i<NB3_NCOLOR; i++ )
     fwrite( &palette[i], 4, 1, fp );
   /* pixel */
-  for( i=size-1; i>=6; i-- )
-    fwrite( buf+i, sizeof(uint8_t), 1, fp );
+  for( i=0; i<NB3_HEIGHT; i++ )
+    for( j=0; j<NB3_WIDTH; j++ )
+      fwrite( buf+6+NB3_WIDTH*(NB3_HEIGHT-i-1)+j, sizeof(uint8_t), 1, fp );
 }
 
 static char *nb3name[] = {
@@ -333,9 +334,9 @@ static char *nb3name[] = {
   "服部半蔵",
   "松永久秀",
   "足利義昭",
-  "",
+  "宇喜多秀家",
   "今川氏真",
-  "",
+  "神保氏張",
   "姉小路頼綱",
   "斎藤龍興",
   "織田信忠",
@@ -351,11 +352,11 @@ static char *nb3name[] = {
   "毛利隆元",
   "清水宗春",
   "山中鹿介",
-  "佐々政成",
+  "佐々成政",
   "筒井順慶",
   "",
   "真田昌幸",
-  "木曾義昌",
+  "木曽義昌",
   "小山田信繁",
   "",
   "佐久間盛政",
@@ -375,14 +376,14 @@ static char *nb3name[] = {
   "内藤信豊",
   "馬場信房",
   "森蘭丸",
-  "",
+  "石田三成",
   "真田幸村",
   "真田幸隆",
   "武田義信",
   "里見義頼",
   "北条氏規",
   "北条氏邦",
-  "",
+  "武田信豊",
   "武田信廉",
   "穴山信君",
   "秋山信友",
@@ -392,7 +393,7 @@ static char *nb3name[] = {
   "織田信包",
   "織田信孝",
   "",
-  "",
+  "山内一豊",
   "加藤清正",
   "福島正則",
   "斎藤朝信",
@@ -402,27 +403,27 @@ static char *nb3name[] = {
   "蒲生氏郷",
   "藤堂高虎",
   "香宗我部親泰",
-  "",
+  "長宗我部信親",
   "北条綱成",
   "香川親和",
   "羽柴秀長",
-  "",
-  "",
+  "武田信勝",
+  "仁科盛信",
   "三好義賢",
   "榊原康政",
-  "",
+  "井伊直政",
   "鳥居元忠",
   "直江景綱",
   "柿崎景家",
   "吉川広家",
-  "",
-  "",
+  "九鬼嘉隆",
+  "浅野長政",
   "氏家卜全",
   "安藤守就",
   "本願寺光寿",
   "",
   "細川忠興",
-  "十河一存",
+  "十河存保",
   "村上義清",
   "土岐頼次",
   "尼子義久",
@@ -439,7 +440,7 @@ static char *nb3name[] = {
   "和田惟政",
   "三好長逸",
   "三好政康",
-  "十河存保",
+  "十河一存",
   "岩成友通",
   "一色義定",
   "山名祐豊",
@@ -449,7 +450,7 @@ static char *nb3name[] = {
   "口羽通良",
   "池田恒興",
   "金森長近",
-  "",
+  "堀秀政",
 };
 
 #define FINNAME0 "palette.nb3"
